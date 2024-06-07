@@ -22,5 +22,5 @@ DATABASES = {
 ## 运行
 
 ```
-python manage.py runserver 80
+python manage.py runserver 
 ```
