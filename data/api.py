@@ -93,9 +93,9 @@ def get_sql(inputx):
         messages.append({'role': 'user', 'content': user_input})
         assistant_output = get_response(messages).output.choices[0]['message']['content']
         messages.append({'role': 'assistant', 'content': assistant_output})
-        print(f'用户输入：{user_input}')
-        print(f'模型输出：{assistant_output}')
-        print('\n')
+        # print(f'用户输入：{user_input}')
+        # print(f'模型输出：{assistant_output}')
+        # print('\n')
     # 假设这是你想要提取的 SQL 语句
     sql_statement = assistant_output
 
@@ -104,7 +104,7 @@ def get_sql(inputx):
 
     # 使用 findall 方法来查找所有匹配的 SQL 语句
     matches = re.findall(r"```sql(.+?)```", sql_statement, re.DOTALL)
-    print(matches)
+    # print(matches)
     # 打印匹配结果
     # 假设这是您想要替换的列表
     sql_string = "".join(matches)
@@ -119,7 +119,7 @@ def get_sql(inputx):
     processed_sql_string = '\n'.join(processed_lines)
 
     # 打印处理后的 SQL 字符串
-    print(processed_sql_string)
+    # print(processed_sql_string)
     return processed_sql_string
 if __name__ == '__main__':
     get_sql()
