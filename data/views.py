@@ -5,6 +5,7 @@ from django.db.models import Avg,Max,Min,Count,Sum,F ,Q #   引入函数
 # Create your views here.
 import json
 from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 
 from django.db import connection
@@ -22,7 +23,6 @@ def add_query(request):
         inputx = data.get('inputx')
         print(inputx)
         sql_query = api.get_sql(inputx)
-
         try:
             # 获取数据库连接
             with connection.cursor() as cursor:
@@ -44,6 +44,7 @@ def add_query(request):
             return JsonResponse({
                 'code': 200,
                 'message': unique_result,
+                'sql':sql_query,
             })
         except Exception as e:
             # 记录错误日志
@@ -53,3 +54,5 @@ def add_query(request):
                 'code': 500,
                 'message': "数据库查询出错,请仔细检查你的查询语言",
             })
+
+

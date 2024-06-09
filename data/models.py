@@ -24,3 +24,13 @@ class GPU(models.Model):
 class Price(models.Model):
     Brand = models.ForeignKey("Brand", on_delete=models.CASCADE)
     GPU = models.ForeignKey("GPU", on_delete=models.CASCADE)
+
+# class Admin(models.Model):
+#     nick_name = models.CharField(max_length=256)
+#     account_number = models.CharField(max_length=256)
+#     password  = models.CharField(max_length=256)
+
+class User(models.Model):
+    user_name = models.CharField(max_length=256)
+    account_number = models.CharField(max_length=256)
+    password  = models.CharField(max_length=256)
