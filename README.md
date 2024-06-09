@@ -18,17 +18,20 @@ DATABASES = {
         'PASSWORD': '', # 数据库密码吗
     }
 }
-若数据库发生改变
+```
+4.若数据库发生改变
 ```
 python manage.py makemigrations data
 python manage.py migrate data
 ```
 
-```
+
 ## 运行
+进后端文件夹
 ```
 cd backend
 ```
+在8000端口运行后端
 ```
 python manage.py runserver 
 ```
