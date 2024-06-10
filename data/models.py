@@ -24,6 +24,7 @@ class GPU(models.Model):
 class Price(models.Model):
     Brand = models.ForeignKey("Brand", on_delete=models.CASCADE)
     GPU = models.ForeignKey("GPU", on_delete=models.CASCADE)
+    Price = models.DecimalField(max_digits=10, decimal_places=2)
 
 # class Admin(models.Model):
 #     nick_name = models.CharField(max_length=256)

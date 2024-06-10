@@ -23,6 +23,7 @@ def add_query(request):
         inputx = data.get('inputx')
         print(inputx)
         sql_query = api.get_sql(inputx)
+        print(sql_query)
         try:
             # 获取数据库连接
             with connection.cursor() as cursor:
@@ -54,5 +55,12 @@ def add_query(request):
                 'code': 500,
                 'message': "数据库查询出错,请仔细检查你的查询语言",
             })
+
+    # @csrf_exempt
+    # def provide_data1():
+    #     if request.method == 'POST':
+
+
+
 
 
