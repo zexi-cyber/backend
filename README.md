@@ -33,7 +33,7 @@ cd backend
 ```
 在8000端口运行后端
 ```
-python manage.py runserver 
+python manage.py runserver 8000
 ```
 ## 大模型查询接口
 
@@ -59,29 +59,57 @@ POST
 ### 返回数据
 ```
 {
-    "code": 200,
-    "message": [
-        [
-            "10449.00"
-        ],
-        [
-            "3499.00"
-        ],
-        [
-            "14999.00"
-        ],
-        [
-            "9599.00"
-        ],
-        [
-            "1199.00"
-        ],
-        [
-            "5499.00"
-        ]
-    ],
-    "sql": " SELECT data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_gpu.id JOIN data_Brand ON
-     data_Price.Brand_id = data_brand.id WHERE data_Brand.name = 'COLORFUL' ORDER BY data_price.price DESC; "
+  "code": 200,
+  "message": [
+    {
+      "GPU_name": "GeForce RTX 4090",
+      "price": "20599.00"
+    },
+    {
+      "GPU_name": "GeForce RTX 4090",
+      "price": "16998.00"
+    },
+    {
+      "GPU_name": "GeForce RTX 4090",
+      "price": "14999.00"
+    },
+    {
+      "GPU_name": "GeForce RTX 4090 D",
+      "price": "14999.00"
+    },
+    {
+      "GPU_name": "GeForce RTX 4090",
+      "price": "12999.00"
+    },
+    {
+      "GPU_name": "GeForce RTX 4080 SUPER",
+      "price": "12489.00"
+    },
+    {
+      "GPU_name": "GeForce RTX 4080 SUPER",
+      "price": "9599.00"
+    },
+    {
+      "GPU_name": "Radeon RX 7900 XTX",
+      "price": "9199.00"
+    },
+    {
+      "GPU_name": "GeForce RTX 4080 SUPER",
+      "price": "8899.00"
+    },
+    {
+      "GPU_name": "GeForce RTX 4080 SUPER",
+      "price": "8099.00"
+    },
+    {
+      "GPU_name": "Radeon RX 7900 XTX",
+      "price": "7699.00"
+    }
+  ],
+  "sql": "\nSELECT data_GPU.GPU_name, data_price.price FROM data_Price 
+  JOIN data_GPU ON data_Price.GPU_id = data_gpu.id WHERE data_GPU.type = '发烧级' 
+  ORDER BY data_price.price DESC;"
+}
 ```
 ### 绘制发烧级显卡的价格图接口
 ### 请求地址
@@ -93,71 +121,61 @@ localhost:8080/painting/
 ### 请求方式
 
 ```
-POST
-```
-
-### 数据格式
-```
-{
-	"inputx": ""无输入
-}
+GET
 ```
 
 ### 返回数据
 ```
 {
-   {
     "code": 200,
     "message": [
-        [
-            "Radeon RX 7900 XTX",
-            "7699.00"
-        ],
-        [
-            "GeForce RTX 4080 SUPER",
-            "8099.00"
-        ],
-        [
-            "GeForce RTX 4090",
-            "14999.00"
-        ],
-        [
-            "GeForce RTX 4080 SUPER",
-            "8899.00"
-        ],
-        [
-            "GeForce RTX 4090",
-            "16998.00"
-        ],
-        [
-            "GeForce RTX 4080 SUPER",
-            "12489.00"
-        ],
-        [
-            "GeForce RTX 4090",
-            "12999.00"
-        ],
-        [
-            "GeForce RTX 4080 SUPER",
-            "9599.00"
-        ],
-        [
-            "Radeon RX 7900 XTX",
-            "9199.00"
-        ],
-        [
-            "GeForce RTX 4090 D",
-            "14999.00"
-        ],
-        [
-            "GeForce RTX 4090",
-            "20599.00"
-        ]
+        {
+            "GPU_name": "GeForce RTX 4090",
+            "price": "20599.00"
+        },
+        {
+            "GPU_name": "GeForce RTX 4090",
+            "price": "16998.00"
+        },
+        {
+            "GPU_name": "GeForce RTX 4090",
+            "price": "14999.00"
+        },
+        {
+            "GPU_name": "GeForce RTX 4090 D",
+            "price": "14999.00"
+        },
+        {
+            "GPU_name": "GeForce RTX 4090",
+            "price": "12999.00"
+        },
+        {
+            "GPU_name": "GeForce RTX 4080 SUPER",
+            "price": "12489.00"
+        },
+        {
+            "GPU_name": "GeForce RTX 4080 SUPER",
+            "price": "9599.00"
+        },
+        {
+            "GPU_name": "Radeon RX 7900 XTX",
+            "price": "9199.00"
+        },
+        {
+            "GPU_name": "GeForce RTX 4080 SUPER",
+            "price": "8899.00"
+        },
+        {
+            "GPU_name": "GeForce RTX 4080 SUPER",
+            "price": "8099.00"
+        },
+        {
+            "GPU_name": "Radeon RX 7900 XTX",
+            "price": "7699.00"
+        }
     ],
     "sql": "SELECT data_GPU.GPU_name, data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_gpu.id WHERE data_GPU.type = '发烧级' ORDER BY data_price.price DESC; "
 }
-    "sql": " SELECT data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_gpu.id JOIN data_Brand ON
-     data_Price.Brand_id = data_brand.id WHERE data_Brand.name = 'COLORFUL' ORDER BY data_price.price DESC; "
 ```
 
 

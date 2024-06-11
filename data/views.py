@@ -18,33 +18,29 @@ logger = logging.getLogger(__name__)
 @csrf_exempt
 def add_query(request):
     if request.method == 'POST':
-        # 您的 SQL 查询字符串
+        # 解析请求体中的数据
         data = json.loads(request.body)
         inputx = data.get('inputx')
-        print(inputx)
         sql_query = api.get_sql(inputx)
-        print(sql_query)
+
         try:
             # 获取数据库连接
             with connection.cursor() as cursor:
                 # 执行 SQL 查询
                 cursor.execute(sql_query)
 
-                # 获取查询结果
-                result = cursor.fetchall()
+                # 获取查询结果的列名
+                column_names = [desc[0] for desc in cursor.description]
 
-            # 打印结果
-            # for row in result:
-            #     print("结果：",row[0])  # 假设查询结果的第一列是 price
-            # print(result)
-            # 将元组转换为集合，自动去除重复的元组
-            unique_set = set(result)
-            # 将唯一的元组转换回元组形式
-            unique_result = tuple(unique_set)
-            # print(unique_result)
+                # 转换查询结果为字典列表
+                result = [
+                    dict(zip(column_names, row))
+                    for row in cursor.fetchall()
+                ]
+
             return JsonResponse({
                 'code': 200,
-                'message': unique_result,
+                'message': result,
                 'sql': sql_query,
             })
         except Exception as e:
@@ -58,7 +54,7 @@ def add_query(request):
 
 @csrf_exempt
 def provide_data1(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         sql_query = ("SELECT data_GPU.GPU_name, data_price.price FROM data_Price"
                      " JOIN data_GPU ON data_Price.GPU_id = "
                      "data_gpu.id WHERE data_GPU.type = '发烧级' ORDER BY data_price.price DESC; ")
@@ -68,14 +64,18 @@ def provide_data1(request):
                 # 执行 SQL 查询
                 cursor.execute(sql_query)
 
-                # 获取查询结果
-                result = cursor.fetchall()
-            unique_set = set(result)
-            # 将唯一的元组转换回元组形式
-            unique_result = tuple(unique_set)
+                # 获取查询结果的列名
+                column_names = [desc[0] for desc in cursor.description]
+
+                # 转换查询结果为字典列表
+                result = [
+                    dict(zip(column_names, row))
+                    for row in cursor.fetchall()
+                ]
+
             return JsonResponse({
                 'code': 200,
-                'message': unique_result,
+                'message': result,
                 'sql': sql_query,
             })
         except Exception as e:
