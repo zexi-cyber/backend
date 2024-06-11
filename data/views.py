@@ -22,7 +22,7 @@ def add_query(request):
         data = json.loads(request.body)
         inputx = data.get('inputx')
         sql_query = api.get_sql(inputx)
-
+        print(sql_query)
         try:
             # 获取数据库连接
             with connection.cursor() as cursor:
@@ -37,7 +37,7 @@ def add_query(request):
                     dict(zip(column_names, row))
                     for row in cursor.fetchall()
                 ]
-
+            print(result)
             return JsonResponse({
                 'code': 200,
                 'message': result,
@@ -55,9 +55,9 @@ def add_query(request):
 @csrf_exempt
 def provide_data1(request):
     if request.method == 'GET':
-        sql_query = ("SELECT data_GPU.GPU_name, data_price.price FROM data_Price"
-                     " JOIN data_GPU ON data_Price.GPU_id = "
-                     "data_gpu.id WHERE data_GPU.type = '发烧级' ORDER BY data_price.price DESC; ")
+        sql_query = ("""SELECT data_brand.name, data_GPU.GPU_name, data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_GPU.id JOIN data_Brand ON data_Price.Brand_id = data_Brand.id WHERE data_GPU.type = '发烧级' ORDER BY data_price.price DESC;"""
+                     )
+        print(sql_query)
         try:
             # 获取数据库连接
             with connection.cursor() as cursor:

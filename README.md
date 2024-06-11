@@ -59,56 +59,65 @@ POST
 ### 返回数据
 ```
 {
-  "code": 200,
-  "message": [
-    {
-      "GPU_name": "GeForce RTX 4090",
-      "price": "20599.00"
-    },
-    {
-      "GPU_name": "GeForce RTX 4090",
-      "price": "16998.00"
-    },
-    {
-      "GPU_name": "GeForce RTX 4090",
-      "price": "14999.00"
-    },
-    {
-      "GPU_name": "GeForce RTX 4090 D",
-      "price": "14999.00"
-    },
-    {
-      "GPU_name": "GeForce RTX 4090",
-      "price": "12999.00"
-    },
-    {
-      "GPU_name": "GeForce RTX 4080 SUPER",
-      "price": "12489.00"
-    },
-    {
-      "GPU_name": "GeForce RTX 4080 SUPER",
-      "price": "9599.00"
-    },
-    {
-      "GPU_name": "Radeon RX 7900 XTX",
-      "price": "9199.00"
-    },
-    {
-      "GPU_name": "GeForce RTX 4080 SUPER",
-      "price": "8899.00"
-    },
-    {
-      "GPU_name": "GeForce RTX 4080 SUPER",
-      "price": "8099.00"
-    },
-    {
-      "GPU_name": "Radeon RX 7900 XTX",
-      "price": "7699.00"
-    }
-  ],
-  "sql": "\nSELECT data_GPU.GPU_name, data_price.price FROM data_Price 
-  JOIN data_GPU ON data_Price.GPU_id = data_gpu.id WHERE data_GPU.type = '发烧级' 
-  ORDER BY data_price.price DESC;"
+    "code": 200,
+    "message": [
+        {
+            "name": "华硕",
+            "GPU_name": "GeForce RTX 4090",
+            "price": "20599.00"
+        },
+        {
+            "name": "技嘉",
+            "GPU_name": "GeForce RTX 4090",
+            "price": "16998.00"
+        },
+        {
+            "name": "COLORFUL",
+            "GPU_name": "GeForce RTX 4090",
+            "price": "14999.00"
+        },
+        {
+            "name": "COLORFUL",
+            "GPU_name": "GeForce RTX 4090 D",
+            "price": "14999.00"
+        },
+        {
+            "name": "NVIDIA",
+            "GPU_name": "GeForce RTX 4090",
+            "price": "12999.00"
+        },
+        {
+            "name": "华硕",
+            "GPU_name": "GeForce RTX 4080 SUPER",
+            "price": "12489.00"
+        },
+        {
+            "name": "COLORFUL",
+            "GPU_name": "GeForce RTX 4080 SUPER",
+            "price": "9599.00"
+        },
+        {
+            "name": "技嘉",
+            "GPU_name": "Radeon RX 7900 XTX",
+            "price": "9199.00"
+        },
+        {
+            "name": "技嘉",
+            "GPU_name": "GeForce RTX 4080 SUPER",
+            "price": "8899.00"
+        },
+        {
+            "name": "NVIDIA",
+            "GPU_name": "GeForce RTX 4080 SUPER",
+            "price": "8099.00"
+        },
+        {
+            "name": "蓝宝石",
+            "GPU_name": "Radeon RX 7900 XTX",
+            "price": "7699.00"
+        }
+    ],
+    "sql": "\nSELECT data_Brand.name, data_GPU.GPU_name, data_price.price \nFROM data_Price \nJOIN data_GPU ON data_Price.GPU_id = data_GPU.id \nJOIN data_Brand ON data_Price.Brand_id = data_Brand.id \nWHERE data_GPU.type = '发烧级'\nORDER BY data_price.price DESC;"
 }
 ```
 ### 绘制发烧级显卡的价格图接口
@@ -130,52 +139,70 @@ GET
     "code": 200,
     "message": [
         {
+            "name": "华硕",
             "GPU_name": "GeForce RTX 4090",
             "price": "20599.00"
         },
         {
+            "name": "技嘉",
             "GPU_name": "GeForce RTX 4090",
             "price": "16998.00"
         },
         {
+            "name": "COLORFUL",
             "GPU_name": "GeForce RTX 4090",
             "price": "14999.00"
         },
         {
+            "name": "COLORFUL",
             "GPU_name": "GeForce RTX 4090 D",
             "price": "14999.00"
         },
         {
+            "name": "NVIDIA",
             "GPU_name": "GeForce RTX 4090",
             "price": "12999.00"
         },
         {
+            "name": "华硕",
             "GPU_name": "GeForce RTX 4080 SUPER",
             "price": "12489.00"
         },
         {
+            "name": "COLORFUL",
             "GPU_name": "GeForce RTX 4080 SUPER",
             "price": "9599.00"
         },
         {
+            "name": "技嘉",
             "GPU_name": "Radeon RX 7900 XTX",
             "price": "9199.00"
         },
         {
+            "name": "技嘉",
             "GPU_name": "GeForce RTX 4080 SUPER",
             "price": "8899.00"
         },
         {
+            "name": "NVIDIA",
             "GPU_name": "GeForce RTX 4080 SUPER",
             "price": "8099.00"
         },
         {
+            "name": "蓝宝石",
             "GPU_name": "Radeon RX 7900 XTX",
             "price": "7699.00"
         }
     ],
-    "sql": "SELECT data_GPU.GPU_name, data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_gpu.id WHERE data_GPU.type = '发烧级' ORDER BY data_price.price DESC; "
+    "sql": "SELECT data_brand.name, data_GPU.GPU_name, data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_GPU.id JOIN data_Brand ON data_Price.Brand_id = data_Brand.id WHERE data_GPU.type = '发烧级' ORDER BY data_price.price DESC;"
 }
 ```
 
+# 状态码
 
+```
+200: 请求成功
+300: 无相关数据
+400: 请求权限不足
+500：请求失败
+```
