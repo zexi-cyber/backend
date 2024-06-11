@@ -79,6 +79,7 @@ def get_sql(inputx):
     但是我要你写成：
     ```sql SELECT data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_gpu.id JOIN data_Brand ON data_Price.Brand_id = data_brand.id WHERE data_GPU.GPU_name = 'GeForce RTX 4090' AND data_Brand.name = 'COLORFUL'; ```
         很简单就是把你原来写的换行符改成空格就行
+    注意发烧级，中端级和入门级都不能写成英文
         """
     messages = [{'role': 'system', 'content': 'You are a helpful assistant who masters'
                                               ' how to translate the natural language into '
