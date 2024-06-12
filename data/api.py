@@ -43,7 +43,7 @@ def get_sql(inputx):
         brand_detail_id=data_branddetail.id作为连接条件，而data_Price表通过外键GPU_id和data_gpu连接，所以你在使用JOIN连接这两张表的时候要使用
         data_price.GPU_id=data_gpu.id作为连接条件,同理data_Price表通过外键Brand_id和data_brand连接，所以你在使用JOIN连接这两张表的时候要使用
         data_price.Brand_id=data_brand.id作为连接条件
-        NVIDIA的中文名叫英伟达，COLORFUL的中文名叫做七彩虹，Intel的中文名叫英特尔，MOORE_THREADS的中文名叫做摩尔线程，AMD没有中文名。剩余的几家厂商都是中文名，
+        NVIDIA的中文名叫英伟达，但是在sql语句的查询条件中只能写“NVIDIA”，COLORFUL的中文名叫做七彩虹，Intel的中文名叫英特尔，MOORE_THREADS的中文名叫做摩尔线程，AMD没有中文名。剩余的几家厂商都是中文名，
         他们分别是：华硕、技嘉、蓝宝石。
         在查询AMD、华硕、技嘉、蓝宝石这几家厂商（Brand）时，不要用英文或者拼音去替代他们本来的名称。
         下面是一些显卡名称（GPU_name）的简称
@@ -80,7 +80,26 @@ def get_sql(inputx):
     ```sql SELECT data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_gpu.id JOIN data_Brand ON data_Price.Brand_id = data_brand.id WHERE data_GPU.GPU_name = 'GeForce RTX 4090' AND data_Brand.name = 'COLORFUL'; ```
         很简单就是把你原来写的换行符改成空格就行
     注意发烧级，中端级和入门级都不能写成英文
-        """
+    Jensen Huang又名黄仁勋,老黄，皮衣战神，但是在sql语句的条件里你只能写“Jensen Huang”
+    Dr. Lisa Su又名苏妈，苏姿丰，但是在sql语句的条件里你只能写“Dr. Lisa Su”        
+    当问到：陈秋波创办的公司生产的显卡的所有信息以及均价时
+    你可以写：
+        SELECT data_GPU.GPU_name, data_GPU.type, data_GPU.frequency, data_GPU.power_dissipation, data_GPU.VRAM_cap, data_GPU.VRAM_type, data_GPU.publish_time, AVG(data_price.price) AS average_price
+        FROM data_Price
+        JOIN data_GPU ON data_Price.GPU_id = data_gpu.id
+        JOIN data_Brand ON data_Price.Brand_id = data_brand.id
+        JOIN data_BrandDetail ON data_Brand.brand_detail_id = data_branddetail.id
+        WHERE data_BrandDetail.founder = '陈秋波'
+        GROUP BY data_GPU.GPU_name, data_GPU.type, data_GPU.frequency, data_GPU.power_dissipation, data_GPU.VRAM_cap, data_GPU.VRAM_type, data_GPU.publish_time;
+    也可以写：
+        SELECT data_GPU.GPU_name, MAX(data_GPU.type) AS type, MAX(data_GPU.frequency) AS frequency, MAX(data_GPU.power_dissipation) AS power_dissipation, MAX(data_GPU.VRAM_cap) AS VRAM_cap, MAX(data_GPU.VRAM_type) AS VRAM_type, MAX(data_GPU.publish_time) AS publish_time, AVG(data_price.price) AS average_price
+        FROM data_Price
+        JOIN data_GPU ON data_Price.GPU_id = data_gpu.id
+        JOIN data_Brand ON data_Price.Brand_id = data_brand.id
+        JOIN data_BrandDetail ON data_Brand.brand_detail_id = data_branddetail.id
+        WHERE data_BrandDetail.founder = '陈秋波'
+        GROUP BY data_GPU.GPU_name;
+    """
     messages = [{'role': 'system', 'content': 'You are a helpful assistant who masters'
                                               ' how to translate the natural language into '
                                               'SQL which is specified for MySQL.Now i will provide you with the structure '

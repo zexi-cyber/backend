@@ -57,7 +57,7 @@ def provide_data1(request):
     if request.method == 'GET':
         sql_query = ("""SELECT data_brand.name, data_GPU.GPU_name, data_price.price FROM data_Price JOIN data_GPU ON data_Price.GPU_id = data_GPU.id JOIN data_Brand ON data_Price.Brand_id = data_Brand.id WHERE data_GPU.type = '发烧级' ORDER BY data_price.price DESC;"""
                      )
-        print(sql_query)
+        # print(sql_query)
         try:
             # 获取数据库连接
             with connection.cursor() as cursor:
